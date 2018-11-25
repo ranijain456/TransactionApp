@@ -1,18 +1,26 @@
 package edu.dcccd.trans.service;
 
-import org.springframework.stereotype.Service;
-import edu.dcccd.trans.entity.SelectedDay;
 import edu.dcccd.trans.entity.Transaction;
-import edu.dcccd.trans.repository.SingletonTransaction;
+import edu.dcccd.trans.repository.TransactionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.List; import java.util.Optional;
+import edu.dcccd.trans.entity.Transaction;
+import org.springframework.stereotype.Service;
+import java.util.List; import java.util.Optional;
 
 @Service public class TransactionServiceImpl implements TransactionService {
-    @Override public void createTransaction(Transaction transaction)
-    {
-        SingletonTransaction.getInstance().transactions.add(transaction);
+    @Autowired
+    TransactionRepository transactionRepository;
+    @Override
+    public String createTransaction(Transaction transaction) {
+        boolean mybool = false;
+        try { transactionRepository.save(transaction);
+        } catch(Exception e){ mybool = true;
+        } return mybool?"Failed.":"Successful.";
     }
-    @Override public List<Transaction> getAllTransaction() {
-        return SingletonTransaction.getInstance().transactions; }
+    @Override
+    public Iterable<Transaction> getAllTransaction() {
+        return transactionRepository.findAll(); }
 }
+

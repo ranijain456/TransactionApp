@@ -6,7 +6,9 @@ import java.util.List;
 
 public interface TransactionService {
 
-         void createTransaction(Transaction transaction);
-            List<Transaction> getAllTransaction(); }
+    String createTransaction(Transaction transaction);
+
+    Iterable<Transaction> getAllTransaction();
+}
 
 
